@@ -77,6 +77,7 @@ public class SQLiteCommands {
 
     /**
      * Inserts a book into the database
+     *
      * @param book Book to be inserted into database
      */
     public static void insertBook(Book book) {
@@ -126,8 +127,14 @@ public class SQLiteCommands {
         }
     }
 
+    /**
+     * Searches for books based on search term
+     *
+     * @param searchTerm Term to be searched for
+     * @return List of books containing the searchTerm
+     */
     public static List<Book> searchBooks(String searchTerm) {
-        List<Book> bookList = new ArrayList<Book>();
+        List<Book> bookList = new ArrayList<>();
         String searchTermModified = "'%" + searchTerm + "%'";
         Connection connection;
         Statement stmt;
@@ -137,13 +144,11 @@ public class SQLiteCommands {
             connection.setAutoCommit(false);
 
             stmt = connection.createStatement();
-//            String sql = "SELECT * FROM BOOKS WHERE" +
-//                    "TITLE LIKE " + searchTermModified + " OR " +
-//                    "AUTHOR LIKE " + searchTermModified + "OR " +
-//                    "DESCRIPTION LIKE " + searchTermModified + ";";
+            String sql = "SELECT * FROM BOOKS WHERE " +
+                    "TITLE LIKE " + searchTermModified + " OR " +
+                    "AUTHOR LIKE " + searchTermModified + "OR " +
+                    "DESCRIPTION LIKE " + searchTermModified + ";";
 
-            String sql = "SELECT * FROM BOOKS WHERE" +
-                    "TITLE LIKE '%" + searchTerm + "%';";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int id = rs.getInt("ID");
@@ -192,6 +197,11 @@ public class SQLiteCommands {
         return book;
     }
 
+    /**
+     * Gets the last entry into the database
+     *
+     * @return The most recent entry to the database
+     */
     public static Integer getLastInsertedId() {
         Integer id = null;
         Connection connection;

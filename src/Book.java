@@ -7,6 +7,13 @@ public class Book {
     private String author;
     private String description;
 
+    /**
+     * Used for creating a new book, and creates a new ID
+     *
+     * @param title Title of book
+     * @param author Author of book
+     * @param description Description of book
+     */
     public Book(String title, String author, String description) {
         this.title = title;
         this.author = author;
@@ -14,6 +21,14 @@ public class Book {
         this.id = getLatestId() + 1;
     }
 
+    /**
+     * Used for creating a book already in the database, and whose ID is known
+     *
+     * @param id
+     * @param title
+     * @param author
+     * @param description
+     */
     public Book(int id, String title, String author, String description) {
         this.title = title;
         this.author = author;

@@ -1,5 +1,3 @@
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -165,13 +163,13 @@ public class Main {
         String search = ConsoleHelper.getString();
         ConsoleHelper.printMessage("");
         ConsoleHelper.printMessage("The following books matched your query. " +
-                "Enter the book ID to see more details, or <Enter> to return.\n");
+                "Enter the book ID to see more details, or <Enter> to return.");
+        List<Book> bookList = SQLiteCommands.searchBooks(search);
+        for(Book book: bookList) {
+            ConsoleHelper.printMessage("[" + book.getId() + "] " + book.getTitle(), 1);
+        }
+        ConsoleHelper.printMessage("");
         while(true) {
-            List<Book> bookList = SQLiteCommands.searchBooks(search);
-            for(Book book: bookList) {
-                ConsoleHelper.printMessage("[" + book.getId() + "] " + book.getTitle(), 1);
-            }
-            ConsoleHelper.printMessage("");
             ConsoleHelper.printPrompt("Book ID");
             Integer bookID = ConsoleHelper.getInt(true);
             if(bookID == null) {
@@ -179,18 +177,19 @@ public class Main {
             }
             Book selectedBook = null;
             for(Book book: bookList) {
-                if(book.getId() == bookID); {
+                if(book.getId() == bookID) {
                     selectedBook = book;
                 }
             }
             if(selectedBook != null) {
+                ConsoleHelper.printMessage("");
                 ConsoleHelper.printMessage("ID: " + selectedBook.getId(), 1);
                 ConsoleHelper.printMessage("Title: " + selectedBook.getTitle(), 1);
                 ConsoleHelper.printMessage("Author: " + selectedBook.getAuthor(), 1);
                 ConsoleHelper.printMessage("Description: " + selectedBook.getDescription(), 1);
                 ConsoleHelper.printMessage("");
             } else {
-                ConsoleHelper.printMessage("Please enter a valid Book ID");
+                ConsoleHelper.printMessage("\nPlease enter a valid Book ID\n");
             }
         }
     }
